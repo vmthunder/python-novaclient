@@ -263,14 +263,19 @@ class BootingManagerWithFind(ManagerWithFind):
                 source_type = mapping_parts[1]
                 if source_type.startswith('snap'):
                     bdm_dict['snapshot_id'] = source_id
+                    bdm_dict['source_type'] = 'snapshot'
                 else:
                     bdm_dict['volume_id'] = source_id
+                    bdm_dict['source_type'] = 'volume'
 
             if len(mapping_parts) > 2 and mapping_parts[2]:
                 bdm_dict['volume_size'] = str(int(mapping_parts[2]))
 
             if len(mapping_parts) > 3:
                 bdm_dict['delete_on_termination'] = mapping_parts[3]
+
+            if len(mapping_parts) > 4 and mapping_parts[4]:
+                bdm_dict['destination_type'] = mapping_parts[4]
 
             bdm.append(bdm_dict)
         return bdm
